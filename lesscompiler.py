@@ -18,6 +18,7 @@ SETTING_MINIFY = "minify"
 SETTING_MINNAME = "minName"
 SETTING_OUTPUTDIR = "outputDir"
 SETTING_OUTPUTFILE = "outputFile"
+SETTING_SOURCEMAP = "sourcemap"
 
 
 #define methods to convert css, either the current file or all
@@ -45,7 +46,8 @@ class Compiler:
         'minimised': project_settings.get(SETTING_MINIFY, settings.get(SETTING_MINIFY, True)),
         'min_name': project_settings.get(SETTING_MINNAME, settings.get(SETTING_MINNAME, True)),
         'output_dir': project_settings.get(SETTING_OUTPUTDIR, settings.get(SETTING_OUTPUTDIR)),
-        'output_file': project_settings.get(SETTING_OUTPUTFILE, settings.get(SETTING_OUTPUTFILE))
+        'output_file': project_settings.get(SETTING_OUTPUTFILE, settings.get(SETTING_OUTPUTFILE)),
+        'sourcemap': project_settings.get(SETTING_SOURCEMAP, settings.get(SETTING_SOURCEMAP, False))
     }
 
   # for command 'LessToCssCommand' and 'AutoLessToCssCommand'
@@ -188,6 +190,9 @@ class Compiler:
     else:
       # the call for non minified CSS is the same on all platforms
       cmd = [lessc_command, less, css, "--verbose"]
+
+    if settings['sourcemap']:
+      cmd.extend(["--source-map", "--source-map-basepath=X"])
 
     print("[less2css] Converting " + less + " to " + css)
 
