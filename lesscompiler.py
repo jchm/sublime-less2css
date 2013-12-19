@@ -192,7 +192,7 @@ class Compiler:
       cmd = [lessc_command, less, css, "--verbose"]
 
     if settings['sourcemap']:
-      cmd.extend(["--source-map", "--source-map-basepath=X"])
+      cmd.extend(["--source-map", "--source-map-rootpath='" + dirs['same_dir'] + "'"])
 
     print("[less2css] Converting " + less + " to " + css)
 
